@@ -1,0 +1,17 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+
+# SQLite databases
+*.db
+
+# Streamlit credentials
+.streamlit/credentials.toml
+
+# OS artifacts
+.DS_Store
+Thumbs.db
