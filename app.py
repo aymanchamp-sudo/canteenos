@@ -61,7 +61,7 @@ ICONS = {
     "Textbook Verification":      "✅",
 }
 
-# Build a flat ordered list of (display_label, page_key) for the radio
+# Build a flat ordered list maintaining group order — for single radio
 all_labels = []
 all_keys   = []
 for _, items in NAV_GROUPS:
@@ -76,16 +76,32 @@ if "page" not in st.session_state:
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    # Brand
+    # Brand logo + name (FinSet style)
     st.html("""
     <div class="cos-sidebar-brand">
-        <div class="cos-sidebar-brand-name">🍽️ CanteenOS</div>
-        <div class="cos-sidebar-brand-sub">Costing &amp; Financial Management</div>
+        <div class="cos-sidebar-logo">🍽️</div>
+        <div class="cos-sidebar-brand-text">
+            <div class="cos-sidebar-brand-name">CanteenOS</div>
+            <div class="cos-sidebar-brand-sub">Costing &amp; Financial Mgmt</div>
+        </div>
     </div>
     """)
 
-    # Navigation via radio (CSS hides radio dots and styles items as nav links)
-    current_index  = all_keys.index(st.session_state["page"]) if st.session_state["page"] in all_keys else 0
+    # Section headers + single flat radio (CSS handles the grouped look)
+    # We render section labels as st.html decorators, interleaved with the radio.
+    # However, st.radio is atomic — we can't interleave HTML between radio options.
+    # Solution: use st.radio for the full flat list, then render section labels
+    # as absolute-positioned CSS based on item counts (fragile).
+    # Better: inject group labels as disabled "header" options styled via CSS.
+
+    # We use st.radio with the flat list. Section headers are shown above
+    # via separate st.html calls, with the radio rendered per-section.
+    # To keep tests passing (single session_state["page"] key), we map
+    # from each section radio back to the flat all_keys list.
+
+    current_page = st.session_state["page"]
+    current_index = all_keys.index(current_page) if current_page in all_keys else 0
+
     selected_label = st.radio(
         "Navigation",
         all_labels,

@@ -1,5 +1,6 @@
 """
-theme.py  –  Shared design system for CanteenOS.
+theme.py  –  FinSet-inspired design system for CanteenOS.
+Purple/violet palette matching the uploaded FinSet dashboard reference.
 
 KEY TECHNICAL NOTES:
   - st.markdown(html, unsafe_allow_html=True) in Streamlit 1.52+ strips custom
@@ -19,7 +20,7 @@ import streamlit as st
 GLOBAL_CSS = """
 <style>
 /* ── Font import ──────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ── Base reset ───────────────────────────────────────────── */
 html, body, [class*="css"] {
@@ -28,30 +29,33 @@ html, body, [class*="css"] {
 
 /* ── App background ───────────────────────────────────────── */
 .stApp {
-    background-color: #F5F6FA !important;
+    background-color: #EDE9FE !important;
 }
 
 /* ── Main content block ───────────────────────────────────── */
 .block-container {
-    padding-top: 1.25rem !important;
+    padding-top: 1.5rem !important;
     padding-bottom: 2rem !important;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-    max-width: 1280px !important;
-    background-color: #F5F6FA !important;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+    max-width: 1320px !important;
+    background-color: #EDE9FE !important;
 }
 
 /* ── Top header bar ───────────────────────────────────────── */
 header[data-testid="stHeader"] {
-    background-color: #FFFFFF !important;
-    border-bottom: 1px solid #E2E8F0 !important;
-    height: 3rem !important;
+    background-color: #EDE9FE !important;
+    border-bottom: none !important;
+    height: 2.5rem !important;
 }
 
 /* ── Sidebar ──────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
     background-color: #FFFFFF !important;
-    border-right: 1px solid #E2E8F0 !important;
+    border-right: none !important;
+    box-shadow: 4px 0 24px rgba(124, 58, 237, 0.06) !important;
+    min-width: 230px !important;
+    max-width: 230px !important;
 }
 
 [data-testid="stSidebar"] > div:first-child {
@@ -64,35 +68,35 @@ header[data-testid="stHeader"] {
 }
 
 [data-testid="stSidebar"] .stRadio > div {
-    gap: 1px !important;
+    gap: 2px !important;
     flex-direction: column !important;
 }
 
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label {
     display: flex !important;
     align-items: center !important;
-    padding: 0.45rem 1rem 0.45rem 1.25rem !important;
-    border-radius: 6px !important;
-    font-size: 0.84rem !important;
+    padding: 0.5rem 0.9rem 0.5rem 1rem !important;
+    border-radius: 10px !important;
+    font-size: 0.82rem !important;
     font-weight: 500 !important;
-    color: #374151 !important;
+    color: #4B5563 !important;
     cursor: pointer !important;
-    margin: 1px 8px !important;
-    transition: background 0.1s !important;
+    margin: 1px 10px !important;
+    transition: background 0.15s !important;
+    border: none !important;
 }
 
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:hover {
-    background: #F1F5F9 !important;
-    color: #1E293B !important;
+    background: #F5F3FF !important;
+    color: #7C3AED !important;
 }
 
 /* active nav item — the checked radio label */
-[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label[data-baseweb="radio"]:has(input:checked),
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:has(input:checked) {
-    background: #EEF2FF !important;
-    color: #3730A3 !important;
+    background: #7C3AED !important;
+    color: #FFFFFF !important;
     font-weight: 600 !important;
-    border-left: 3px solid #4F46E5 !important;
+    border: none !important;
 }
 
 /* hide the actual radio dot */
@@ -106,43 +110,45 @@ header[data-testid="stHeader"] {
 
 /* ── Streamlit native elements ────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
-    color: #1E293B !important;
+    color: #1A1A2E !important;
     font-weight: 700 !important;
 }
 
 /* st.metric cards */
 [data-testid="stMetric"] {
     background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 10px !important;
-    padding: 1rem 1.25rem !important;
+    border: none !important;
+    border-radius: 16px !important;
+    padding: 1.25rem 1.5rem !important;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08) !important;
 }
 
 [data-testid="stMetricLabel"] {
     font-size: 0.72rem !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    color: #64748B !important;
+    letter-spacing: 0.06em !important;
+    color: #6B7280 !important;
 }
 
 [data-testid="stMetricValue"] {
     font-size: 1.5rem !important;
     font-weight: 700 !important;
-    color: #0F172A !important;
+    color: #1A1A2E !important;
 }
 
 /* dataframes */
 [data-testid="stDataFrame"] {
-    border-radius: 8px !important;
-    border: 1px solid #E2E8F0 !important;
+    border-radius: 12px !important;
+    border: none !important;
     overflow: hidden !important;
+    box-shadow: 0 1px 8px rgba(124, 58, 237, 0.06) !important;
 }
 
 /* expanders */
 [data-testid="stExpander"] {
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 8px !important;
+    border: 1px solid #E9D5FF !important;
+    border-radius: 12px !important;
     background: #FFFFFF !important;
 }
 
@@ -155,167 +161,219 @@ h1, h2, h3, h4, h5, h6 {
 
 /* alerts */
 [data-testid="stAlert"] {
-    border-radius: 8px !important;
+    border-radius: 12px !important;
     font-size: 0.84rem !important;
 }
 
 /* buttons */
 .stButton > button {
-    border-radius: 6px !important;
+    border-radius: 10px !important;
     font-size: 0.84rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
+    background: #7C3AED !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    padding: 0.5rem 1.25rem !important;
+    transition: background 0.15s !important;
+}
+.stButton > button:hover {
+    background: #6D28D9 !important;
+}
+.stButton > button[kind="secondary"] {
+    background: #F5F3FF !important;
+    color: #7C3AED !important;
+    border: 1px solid #DDD6FE !important;
 }
 
 /* tabs */
 [data-testid="stTabs"] [role="tab"] {
     font-size: 0.84rem !important;
     font-weight: 600 !important;
-    color: #374151 !important;
+    color: #6B7280 !important;
 }
 
 [data-testid="stTabs"] [role="tab"][aria-selected="true"] {
-    color: #3730A3 !important;
+    color: #7C3AED !important;
+    border-bottom-color: #7C3AED !important;
 }
 
 /* form labels */
 .stTextInput label, .stNumberInput label, .stSelectbox label,
 .stDateInput label, .stCheckbox label {
-    font-size: 0.84rem !important;
+    font-size: 0.82rem !important;
     font-weight: 500 !important;
     color: #374151 !important;
 }
 
+/* inputs */
+.stTextInput input, .stNumberInput input, .stSelectbox select {
+    border-radius: 8px !important;
+    border-color: #DDD6FE !important;
+}
+.stTextInput input:focus, .stNumberInput input:focus {
+    border-color: #7C3AED !important;
+    box-shadow: 0 0 0 2px rgba(124,58,237,0.15) !important;
+}
+
 /* horizontal rule */
 hr {
-    border-color: #E2E8F0 !important;
+    border-color: #DDD6FE !important;
     margin: 1rem 0 !important;
 }
 
 /* captions */
 [data-testid="stCaptionContainer"] {
-    color: #64748B !important;
+    color: #6B7280 !important;
     font-size: 0.78rem !important;
+}
+
+/* selectbox */
+[data-testid="stSelectbox"] > div > div {
+    border-radius: 8px !important;
+    border-color: #DDD6FE !important;
+}
+
+/* line chart and bar chart backgrounds */
+[data-testid="stArrowVegaLiteChart"],
+[data-testid="stVegaLiteChart"] {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    padding: 0.5rem !important;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08) !important;
 }
 
 /* ── Custom component styles ──────────────────────────────── */
 
-/* Page header */
+/* ── Page header ─────────────────────────────────────────── */
 .cos-page-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding-bottom: 1rem;
-    margin-bottom: 1.25rem;
-    border-bottom: 1px solid #E2E8F0;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 .cos-page-title {
-    font-size: 1.35rem;
+    font-size: 1.6rem;
     font-weight: 800;
-    color: #0F172A;
+    color: #1A1A2E;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
 }
 .cos-page-subtitle {
-    font-size: 0.8rem;
-    color: #64748B;
+    font-size: 0.82rem;
+    color: #6B7280;
     margin-top: 0.3rem;
     line-height: 1.5;
+    font-weight: 400;
 }
 .cos-badge {
     display: inline-flex;
     align-items: center;
-    background: #EEF2FF;
-    border: 1px solid #C7D2FE;
+    background: #7C3AED;
     border-radius: 20px;
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 1rem;
     font-size: 0.72rem;
-    font-weight: 600;
-    color: #3730A3;
+    font-weight: 700;
+    color: #FFFFFF;
     white-space: nowrap;
-    margin-top: 0.2rem;
+    letter-spacing: 0.04em;
 }
 
-/* Section header */
+/* ── Section header ──────────────────────────────────────── */
 .cos-section-title {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 700;
-    color: #0F172A;
+    color: #1A1A2E;
     margin: 0 0 0.1rem 0;
 }
 .cos-section-sub {
     font-size: 0.78rem;
-    color: #64748B;
+    color: #6B7280;
     margin: 0 0 0.75rem 0;
+    font-weight: 400;
 }
 
-/* KPI card */
+/* ── KPI card ────────────────────────────────────────────── */
 .cos-kpi-card {
     background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 10px;
-    padding: 1rem 1.2rem;
+    border: none;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
     position: relative;
     overflow: hidden;
-    height: 100%;
-}
-.cos-kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--kpi-accent, #3B5BDB);
-    border-radius: 10px 10px 0 0;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08);
+    min-height: 110px;
 }
 .cos-kpi-label {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #64748B;
-    margin-bottom: 0.4rem;
+    color: #6B7280;
+    margin-bottom: 0.5rem;
 }
 .cos-kpi-value {
-    font-size: 1.45rem;
+    font-size: 1.55rem;
     font-weight: 800;
-    color: #0F172A;
+    color: #1A1A2E;
     line-height: 1.1;
-    margin-bottom: 0.3rem;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
 }
+.cos-kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+}
+.cos-kpi-trend-up   { background: #D1FAE5; color: #065F46; }
+.cos-kpi-trend-down { background: #FEE2E2; color: #991B1B; }
+.cos-kpi-trend-neu  { background: #F3F4F6; color: #374151; }
 .cos-kpi-sub {
     font-size: 0.72rem;
-    color: #94A3B8;
+    color: #9CA3AF;
+    margin-top: 0.3rem;
 }
 .cos-kpi-icon {
     position: absolute;
-    top: 0.9rem; right: 1rem;
+    top: 1rem;
+    right: 1.1rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1rem;
-    opacity: 0.3;
+    background: #F5F3FF;
 }
-.kpi-blue   { --kpi-accent: #3B5BDB; }
-.kpi-indigo { --kpi-accent: #4F46E5; }
-.kpi-green  { --kpi-accent: #059669; }
-.kpi-profit { --kpi-accent: #0EA5E9; }
-.kpi-red    { --kpi-accent: #DC2626; }
-.kpi-amber  { --kpi-accent: #D97706; }
+/* accent color variants */
+.kpi-purple .cos-kpi-icon { background: #EDE9FE; }
+.kpi-green  .cos-kpi-icon { background: #D1FAE5; }
+.kpi-blue   .cos-kpi-icon { background: #DBEAFE; }
+.kpi-red    .cos-kpi-icon { background: #FEE2E2; }
+.kpi-amber  .cos-kpi-icon { background: #FEF3C7; }
 
-/* Process stepper */
+/* ── Process stepper ─────────────────────────────────────── */
 .cos-stepper {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 0;
     background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 10px;
-    padding: 0.9rem 1.25rem;
-    margin-bottom: 1.25rem;
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
     overflow-x: auto;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08);
 }
 .cos-step {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.5rem;
     flex-shrink: 0;
     padding: 0.1rem 0;
 }
@@ -323,10 +381,10 @@ hr {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: #3B5BDB;
+    background: #7C3AED;
     color: #FFFFFF;
     font-size: 0.6rem;
     font-weight: 800;
@@ -339,40 +397,38 @@ hr {
     white-space: nowrap;
 }
 .cos-step-arrow {
-    color: #CBD5E1;
-    font-size: 0.8rem;
-    margin: 0 0.5rem;
+    color: #C4B5FD;
+    font-size: 0.85rem;
+    margin: 0 0.6rem;
     flex-shrink: 0;
-    font-weight: 400;
 }
 
-/* Performer list */
+/* ── Performer list ──────────────────────────────────────── */
 .cos-performer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.55rem 0.9rem;
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: 7px;
+    padding: 0.6rem 1rem;
+    background: #F9F7FF;
+    border-radius: 10px;
     margin-bottom: 0.4rem;
     font-size: 0.82rem;
 }
 .cos-performer-medal { font-size: 0.95rem; flex-shrink: 0; }
-.cos-performer-name  { flex: 1; font-weight: 600; color: #1E293B; margin-left: 0.6rem; }
+.cos-performer-name  { flex: 1; font-weight: 600; color: #1A1A2E; margin-left: 0.6rem; }
 .cos-performer-value { font-weight: 700; color: #059669; }
 
-/* Loss alert */
+/* ── Loss alert ──────────────────────────────────────────── */
 .cos-alert {
     background: #FFFBEB;
     border: 1px solid #FDE68A;
     border-left: 4px solid #F59E0B;
-    border-radius: 8px;
-    padding: 0.9rem 1.1rem;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
     margin-bottom: 1rem;
 }
 .cos-alert-title {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     font-weight: 700;
     color: #78350F;
     margin-bottom: 0.6rem;
@@ -385,33 +441,33 @@ hr {
 .cos-loss-chip {
     background: #FEF2F2;
     border: 1px solid #FECACA;
-    border-radius: 7px;
-    padding: 0.45rem 0.85rem;
+    border-radius: 10px;
+    padding: 0.5rem 0.9rem;
     min-width: 120px;
 }
 .cos-loss-chip-name  { font-size: 0.78rem; font-weight: 600; color: #7F1D1D; }
 .cos-loss-chip-value { font-size: 0.72rem; color: #991B1B; margin-top: 1px; }
 
-/* Working / formula box */
+/* ── Working / formula box ───────────────────────────────── */
 .cos-working {
-    background: #F0F7FF;
-    border: 1px solid #BFDBFE;
-    border-left: 4px solid #3B5BDB;
-    border-radius: 8px;
-    padding: 0.9rem 1.1rem;
+    background: #F5F3FF;
+    border: 1px solid #DDD6FE;
+    border-left: 4px solid #7C3AED;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
     margin: 0.6rem 0;
     font-size: 0.83rem;
-    color: #1E3A5F;
-    line-height: 1.75;
+    color: #2E1065;
+    line-height: 1.8;
 }
 
-/* Status banners */
+/* ── Status banners ──────────────────────────────────────── */
 .cos-banner-pass {
     background: #F0FDF4;
     border: 1px solid #BBF7D0;
     border-left: 4px solid #16A34A;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    padding: 0.8rem 1.1rem;
     font-size: 0.84rem;
     color: #14532D;
     font-weight: 600;
@@ -421,47 +477,49 @@ hr {
     background: #FEF2F2;
     border: 1px solid #FECACA;
     border-left: 4px solid #DC2626;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    padding: 0.8rem 1.1rem;
     font-size: 0.84rem;
     color: #7F1D1D;
     font-weight: 600;
     margin-bottom: 1rem;
 }
 
-/* Accounting statement */
+/* ── Accounting statement ────────────────────────────────── */
 .cos-acct-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.84rem;
     background: #FFFFFF;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #E2E8F0;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.07);
     margin-bottom: 1.25rem;
 }
 .cos-acct-table caption {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #0F172A;
+    color: #1A1A2E;
     text-align: left;
     padding: 0.6rem 0 0.6rem 0;
     caption-side: top;
 }
 .cos-acct-table th {
-    background: #F8FAFC;
-    color: #374151;
-    font-weight: 600;
-    padding: 0.6rem 1rem;
+    background: #F5F3FF;
+    color: #7C3AED;
+    font-weight: 700;
+    padding: 0.65rem 1rem;
     text-align: left;
-    border-bottom: 2px solid #E2E8F0;
-    font-size: 0.8rem;
+    border-bottom: 2px solid #DDD6FE;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 .cos-acct-table th.r { text-align: right; }
 .cos-acct-table td {
     padding: 0.5rem 1rem;
     color: #374151;
-    border-bottom: 1px solid #F1F5F9;
+    border-bottom: 1px solid #F5F3FF;
 }
 .cos-acct-table td.r {
     text-align: right;
@@ -470,96 +528,134 @@ hr {
 }
 .cos-acct-table tr.row-total td {
     font-weight: 700;
-    color: #0F172A;
-    background: #EEF2FF;
-    border-top: 2px solid #3B5BDB;
-    border-bottom: 2px solid #3B5BDB;
+    color: #1A1A2E;
+    background: #EDE9FE;
+    border-top: 2px solid #7C3AED;
+    border-bottom: 2px solid #7C3AED;
 }
 .cos-acct-table tr.row-mid-sep td {
-    border-top: 1px solid #E2E8F0;
-    border-left: 1px solid #E2E8F0;
+    border-top: 1px solid #DDD6FE;
+    border-left: 1px solid #DDD6FE;
 }
 
-/* Consistency check rows */
+/* ── Consistency check rows ──────────────────────────────── */
 .cos-check-row {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.65rem 1rem;
-    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
     font-size: 0.83rem;
     color: #374151;
     margin-bottom: 0.5rem;
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
+    background: #FAFAFA;
+    border: 1px solid #E9D5FF;
 }
 .cos-check-pass { border-left: 4px solid #16A34A; }
 .cos-check-fail { border-left: 4px solid #DC2626; }
 
-/* Verification card */
+/* ── Verification card ───────────────────────────────────── */
 .cos-verify-card-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding: 0.9rem 1.1rem;
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    background: #FFFFFF;
+    border: 1px solid #E9D5FF;
+    border-radius: 12px;
     margin-bottom: 0.5rem;
+    box-shadow: 0 1px 6px rgba(124, 58, 237, 0.06);
 }
-.cos-verify-problem-id    { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: #64748B; text-transform: uppercase; }
-.cos-verify-problem-title { font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0.15rem 0; }
-.cos-verify-ref           { font-size: 0.72rem; color: #94A3B8; }
+.cos-verify-problem-id    { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: #7C3AED; text-transform: uppercase; }
+.cos-verify-problem-title { font-size: 0.95rem; font-weight: 700; color: #1A1A2E; margin: 0.15rem 0; }
+.cos-verify-ref           { font-size: 0.72rem; color: #9CA3AF; }
 .cos-badge-pass {
     display: inline-flex; align-items: center; gap: 0.25rem;
-    background: #F0FDF4; color: #14532D; border: 1px solid #BBF7D0;
-    border-radius: 20px; padding: 0.2rem 0.7rem;
+    background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0;
+    border-radius: 20px; padding: 0.25rem 0.8rem;
     font-size: 0.7rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
 }
 .cos-badge-fail {
     display: inline-flex; align-items: center; gap: 0.25rem;
-    background: #FEF2F2; color: #7F1D1D; border: 1px solid #FECACA;
-    border-radius: 20px; padding: 0.2rem 0.7rem;
+    background: #FEE2E2; color: #7F1D1D; border: 1px solid #FECACA;
+    border-radius: 20px; padding: 0.25rem 0.8rem;
     font-size: 0.7rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
 }
 
-/* Sidebar brand block */
-.cos-sidebar-brand {
-    padding: 1.1rem 1.25rem 1rem 1.25rem;
-    border-bottom: 1px solid #E2E8F0;
-    margin-bottom: 0.25rem;
+/* ── Sidebar brand block ─────────────────────────────────── */
+.cos-sidebar-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #7C3AED;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    flex-shrink: 0;
+    margin-right: 0.65rem;
 }
+.cos-sidebar-brand {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.1rem 1rem 1.1rem;
+    border-bottom: 1px solid #F3F0FF;
+    margin-bottom: 0.5rem;
+}
+.cos-sidebar-brand-text {}
 .cos-sidebar-brand-name {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 800;
-    color: #0F172A;
+    color: #1A1A2E;
     letter-spacing: -0.02em;
+    line-height: 1.1;
 }
 .cos-sidebar-brand-sub {
-    font-size: 0.7rem;
-    color: #94A3B8;
-    font-weight: 500;
+    font-size: 0.65rem;
+    color: #9CA3AF;
+    font-weight: 400;
     margin-top: 0.1rem;
 }
 .cos-sidebar-section {
-    font-size: 0.62rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    color: #94A3B8;
+    letter-spacing: 0.12em;
+    color: #C4B5FD;
     text-transform: uppercase;
-    padding: 0.9rem 1.25rem 0.3rem 1.25rem;
+    padding: 0.9rem 1.1rem 0.3rem 1.1rem;
 }
 .cos-sidebar-footer {
     margin: 1rem 0.75rem 0.75rem 0.75rem;
-    padding: 0.65rem 0.9rem;
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    background: #F5F3FF;
+    border: 1px solid #DDD6FE;
+    border-radius: 12px;
     font-size: 0.68rem;
-    color: #94A3B8;
-    line-height: 1.6;
+    color: #9CA3AF;
+    line-height: 1.65;
 }
-.cos-sidebar-footer-label { font-weight: 700; color: #64748B; margin-bottom: 0.2rem; }
+.cos-sidebar-footer-label { font-weight: 700; color: #7C3AED; margin-bottom: 0.2rem; }
+
+/* ── Chart card wrapper ──────────────────────────────────── */
+.cos-chart-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem 1rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08);
+    margin-bottom: 1rem;
+}
+.cos-chart-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 0.15rem;
+}
+.cos-chart-sub {
+    font-size: 0.74rem;
+    color: #6B7280;
+    margin-bottom: 0.6rem;
+}
 </style>
 """
 
@@ -583,7 +679,7 @@ def _html(content: str):
 # ---------------------------------------------------------------------------
 
 def page_header(title: str, subtitle: str, badge: str = None):
-    badge_html = (f'<div class="cos-badge">📌 {badge}</div>' if badge else "")
+    badge_html = (f'<div class="cos-badge">{badge}</div>' if badge else "")
     _html(f"""
     <div class="cos-page-header">
         <div>
@@ -611,16 +707,25 @@ def section_header(title: str, subtitle: str = ""):
 def kpi_row(cards: list):
     """
     cards: list of dicts with keys:
-        label, value, sub (opt), icon (opt), color_class (opt)
-    color_class: kpi-blue | kpi-indigo | kpi-green | kpi-profit | kpi-red | kpi-amber
+        label, value, sub (opt), icon (opt), color_class (opt), trend (opt)
+    trend: dict with keys: direction ('up'|'down'|'neutral'), text
+    color_class: kpi-purple | kpi-green | kpi-blue | kpi-red | kpi-amber
     """
     cols = st.columns(len(cards))
     for col, card in zip(cols, cards):
         icon_html = (f'<div class="cos-kpi-icon">{card["icon"]}</div>'
                      if card.get("icon") else "")
-        sub_html  = (f'<div class="cos-kpi-sub">{card["sub"]}</div>'
-                     if card.get("sub") else "")
-        color     = card.get("color_class", "kpi-blue")
+        sub_html = ""
+        if card.get("trend"):
+            t = card["trend"]
+            cls = {"up": "cos-kpi-trend-up", "down": "cos-kpi-trend-down"}.get(
+                t.get("direction", "neutral"), "cos-kpi-trend-neu"
+            )
+            arrow = {"up": "↑", "down": "↓"}.get(t.get("direction", ""), "·")
+            sub_html = f'<div class="cos-kpi-trend {cls}">{arrow} {t["text"]}</div>'
+        elif card.get("sub"):
+            sub_html = f'<div class="cos-kpi-sub">{card["sub"]}</div>'
+        color = card.get("color_class", "kpi-purple")
         with col:
             st.html(f"""
             <div class="cos-kpi-card {color}">
@@ -806,7 +911,7 @@ def cost_sheet_table(rows, with_unit=True):
     bold_rows = [i for i, r in enumerate(rows) if r["bold"]]
 
     def style(row):
-        return ["font-weight:700;background:#EEF2FF" if row.name in bold_rows else "" for _ in row]
+        return ["font-weight:700;background:#EDE9FE" if row.name in bold_rows else "" for _ in row]
 
     st.dataframe(df.style.apply(style, axis=1), hide_index=True,
                  height=35 * (len(df) + 1) + 3, use_container_width=True)

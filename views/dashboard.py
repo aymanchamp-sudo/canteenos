@@ -27,15 +27,41 @@ def render(conn, month):
     acc = sv.month_accounts(conn, month, mc)
     total_cost = acc["sales"] - acc["net_profit"]
 
-    # ── 1. KPI Row (Compact, 4 cards) ──────────────────────────────────────────
+    # ── 1. KPI Row ──────────────────────────────────────────────────────────────
     net_pct = pct(acc["net_profit"] / acc["sales"]) if acc["sales"] else "—"
     gp_pct  = pct(acc["gross_profit"] / acc["sales"]) if acc["sales"] else "—"
     kpi_row([
-        {"label": "Total Sales",  "value": inr(acc["sales"], 0),        "sub": f"{month_label(month)}",       "icon": "💰", "color_class": "kpi-blue"},
-        {"label": "Total Cost",   "value": inr(total_cost, 0),          "sub": "Production + overheads",      "icon": "📦", "color_class": "kpi-indigo"},
-        {"label": "Gross Profit", "value": inr(acc["gross_profit"], 0), "sub": f"GP Margin: {gp_pct}",        "icon": "📈", "color_class": "kpi-green"},
-        {"label": "Net Profit",   "value": inr(acc["net_profit"], 0),   "sub": f"NP Margin: {net_pct}",        "icon": "✅", "color_class": "kpi-profit"
-         if acc["net_profit"] >= 0 else "kpi-red"},
+        {
+            "label": "Total Sales",
+            "value": inr(acc["sales"], 0),
+            "icon": "💰",
+            "color_class": "kpi-purple",
+            "trend": {"direction": "up", "text": month_label(month)},
+        },
+        {
+            "label": "Total Cost",
+            "value": inr(total_cost, 0),
+            "icon": "📦",
+            "color_class": "kpi-blue",
+            "sub": "Production + overheads",
+        },
+        {
+            "label": "Gross Profit",
+            "value": inr(acc["gross_profit"], 0),
+            "icon": "📈",
+            "color_class": "kpi-green",
+            "trend": {"direction": "up", "text": f"GM {gp_pct}"},
+        },
+        {
+            "label": "Net Profit",
+            "value": inr(acc["net_profit"], 0),
+            "icon": "✅" if acc["net_profit"] >= 0 else "⚠️",
+            "color_class": "kpi-green" if acc["net_profit"] >= 0 else "kpi-red",
+            "trend": {
+                "direction": "up" if acc["net_profit"] >= 0 else "down",
+                "text": f"NM {net_pct}",
+            },
+        },
     ])
 
     # ── 2. Integrated Costing Flow (Stepper) ──────────────────────────────────
@@ -44,16 +70,21 @@ def render(conn, month):
 
     ds = list(mc["dishes"].values())
 
-    # ── 3. Charts & Analytics Grid ────────────────────────────────────────────
+    # ── 3. Charts & Performers side by side ───────────────────────────────────
     col_left, col_right = st.columns([3, 2], gap="medium")
 
     with col_left:
-        section_header("Sales vs Cost", "Revenue vs full production cost after absorption")
+        st.html("""
+        <div class="cos-chart-card" style="margin-bottom:0;">
+            <div class="cos-chart-title">Sales vs Cost by Dish</div>
+            <div class="cos-chart-sub">Revenue vs full production cost after overhead absorption</div>
+        </div>
+        """)
         chart_data = pd.DataFrame({
             "Sales": [u["qty"] * u["dish"]["selling_price"] for u in ds],
             "Cost":  [u["qty"] * u["full_cost"]             for u in ds],
         }, index=[u["dish"]["name"] for u in ds])
-        st.bar_chart(chart_data, color=["#3B5BDB", "#94A3B8"], height=280)
+        st.bar_chart(chart_data, color=["#7C3AED", "#C4B5FD"], height=260)
 
     with col_right:
         sorted_ds = sorted(ds, key=lambda u: u["profit_total"], reverse=True)
@@ -61,9 +92,9 @@ def render(conn, month):
             {"name": u["dish"]["name"], "value": inr(u["profit_total"], 0)}
             for u in sorted_ds[:5]
         ]
-        top_performers_panel(top_performers, title="Dish Profitability (Ranking)")
+        top_performers_panel(top_performers, title="Dish Profitability Ranking")
 
-    # ── 4. Loss Alert (Attention Required) ─────────────────────────────────────
+    # ── 4. Loss Alert ───────────────────────────────────────────────────────────
     losers = [{"name": u["dish"]["name"],
                "profit_per_unit": inr(u["profit_per_unit"])}
               for u in ds if u["profit_per_unit"] < 0]
@@ -104,7 +135,7 @@ def render(conn, month):
         use_container_width=True,
     )
 
-    # Secondary details in an expander to keep main view concise
+    # Secondary details in an expander
     with st.expander("🔍 View Detailed Cost Breakdown & Counter BEP Summary"):
         d_col1, d_col2 = st.columns(2)
         with d_col1:
