@@ -34,7 +34,7 @@ html, body, [class*="css"] {
 
 /* ── Main content block ───────────────────────────────────── */
 .block-container {
-    padding-top: 1.5rem !important;
+    padding-top: 2rem !important;
     padding-bottom: 2rem !important;
     padding-left: 2.5rem !important;
     padding-right: 2.5rem !important;
@@ -42,11 +42,13 @@ html, body, [class*="css"] {
     background-color: #EDE9FE !important;
 }
 
-/* ── Top header bar ───────────────────────────────────────── */
+/* ── Top header bar — collapse completely ─────────────────── */
 header[data-testid="stHeader"] {
     background-color: #EDE9FE !important;
     border-bottom: none !important;
-    height: 2.5rem !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
 }
 
 /* ── Sidebar ──────────────────────────────────────────────── */
@@ -54,15 +56,15 @@ header[data-testid="stHeader"] {
     background-color: #FFFFFF !important;
     border-right: none !important;
     box-shadow: 4px 0 24px rgba(124, 58, 237, 0.06) !important;
-    min-width: 230px !important;
-    max-width: 230px !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
 }
 
 [data-testid="stSidebar"] > div:first-child {
     padding: 0 !important;
 }
 
-/* sidebar radio — hide the default radio circles, style as nav links */
+/* ── Sidebar radio — hide all built-in radio chrome ──────── */
 [data-testid="stSidebar"] .stRadio > label {
     display: none !important;
 }
@@ -72,18 +74,27 @@ header[data-testid="stHeader"] {
     flex-direction: column !important;
 }
 
+/* Hide the radio circle indicator (the ○ / ◉ dot) */
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label > div:first-child,
+[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label > span:first-child,
+[data-testid="stSidebar"] [data-baseweb="radio"] > div:first-child,
+[data-testid="stSidebar"] [data-baseweb="radio"] [data-testid="stRadioOptions"] > div:first-child {
+    display: none !important;
+}
+
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label {
     display: flex !important;
     align-items: center !important;
-    padding: 0.5rem 0.9rem 0.5rem 1rem !important;
+    padding: 0.48rem 0.85rem 0.48rem 0.95rem !important;
     border-radius: 10px !important;
-    font-size: 0.82rem !important;
+    font-size: 0.81rem !important;
     font-weight: 500 !important;
     color: #4B5563 !important;
     cursor: pointer !important;
-    margin: 1px 10px !important;
+    margin: 1px 8px !important;
     transition: background 0.15s !important;
     border: none !important;
+    gap: 0 !important;
 }
 
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:hover {
@@ -91,7 +102,7 @@ header[data-testid="stHeader"] {
     color: #7C3AED !important;
 }
 
-/* active nav item — the checked radio label */
+/* active nav item */
 [data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:has(input:checked) {
     background: #7C3AED !important;
     color: #FFFFFF !important;
@@ -99,12 +110,20 @@ header[data-testid="stHeader"] {
     border: none !important;
 }
 
-/* hide the actual radio dot */
+/* hide the markdown paragraph spacing inside label */
 [data-testid="stSidebar"] .stRadio span[data-testid="stMarkdownContainer"] p {
     margin: 0 !important;
+    line-height: 1.4 !important;
 }
 
+/* hide the raw <input> element */
 [data-testid="stSidebar"] input[type="radio"] {
+    display: none !important;
+}
+
+/* hide any residual BaseWeb radio circle SVG */
+[data-testid="stSidebar"] [data-baseweb="radio"] svg,
+[data-testid="stSidebar"] [data-baseweb="radio"] [role="radio"] {
     display: none !important;
 }
 
@@ -584,38 +603,45 @@ hr {
 
 /* ── Sidebar brand block ─────────────────────────────────── */
 .cos-sidebar-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
     background: #7C3AED;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #FFFFFF;
     flex-shrink: 0;
-    margin-right: 0.65rem;
+    margin-right: 0.6rem;
 }
 .cos-sidebar-brand {
     display: flex;
     align-items: center;
-    padding: 1.25rem 1.1rem 1rem 1.1rem;
+    padding: 1.1rem 1rem 0.9rem 1rem;
     border-bottom: 1px solid #F3F0FF;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
-.cos-sidebar-brand-text {}
+.cos-sidebar-brand-text {
+    min-width: 0;
+    overflow: hidden;
+}
 .cos-sidebar-brand-name {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 800;
     color: #1A1A2E;
     letter-spacing: -0.02em;
-    line-height: 1.1;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 .cos-sidebar-brand-sub {
-    font-size: 0.65rem;
+    font-size: 0.63rem;
     color: #9CA3AF;
     font-weight: 400;
     margin-top: 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .cos-sidebar-section {
     font-size: 0.6rem;
@@ -623,7 +649,7 @@ hr {
     letter-spacing: 0.12em;
     color: #C4B5FD;
     text-transform: uppercase;
-    padding: 0.9rem 1.1rem 0.3rem 1.1rem;
+    padding: 0.75rem 1rem 0.25rem 1rem;
 }
 .cos-sidebar-footer {
     margin: 1rem 0.75rem 0.75rem 0.75rem;

@@ -79,10 +79,10 @@ with st.sidebar:
     # Brand logo + name (FinSet style)
     st.html("""
     <div class="cos-sidebar-brand">
-        <div class="cos-sidebar-logo">🍽️</div>
+        <div class="cos-sidebar-logo">🍽</div>
         <div class="cos-sidebar-brand-text">
             <div class="cos-sidebar-brand-name">CanteenOS</div>
-            <div class="cos-sidebar-brand-sub">Costing &amp; Financial Mgmt</div>
+            <div class="cos-sidebar-brand-sub">Costing &amp; Finance</div>
         </div>
     </div>
     """)
