@@ -34,7 +34,7 @@ html, body, [class*="css"] {
 
 /* ── Main content block ───────────────────────────────────── */
 .block-container {
-    padding-top: 2rem !important;
+    padding-top: 3.25rem !important;
     padding-bottom: 2rem !important;
     padding-left: 2.5rem !important;
     padding-right: 2.5rem !important;
@@ -42,13 +42,23 @@ html, body, [class*="css"] {
     background-color: #EDE9FE !important;
 }
 
-/* ── Top header bar — collapse completely ─────────────────── */
+/* ── Top header bar & sidebar controls ────────────────────── */
 header[data-testid="stHeader"] {
-    background-color: #EDE9FE !important;
+    background-color: transparent !important;
     border-bottom: none !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    overflow: hidden !important;
+    height: 2.75rem !important;
+    z-index: 100 !important;
+}
+
+[data-testid="stSidebarCollapsedControl"] {
+    display: flex !important;
+    visibility: visible !important;
+    z-index: 1001 !important;
+    color: #7C3AED !important;
+}
+
+[data-testid="stSidebarCollapseButton"] {
+    color: #7C3AED !important;
 }
 
 /* ── Sidebar ──────────────────────────────────────────────── */
@@ -56,8 +66,11 @@ header[data-testid="stHeader"] {
     background-color: #FFFFFF !important;
     border-right: none !important;
     box-shadow: 4px 0 24px rgba(124, 58, 237, 0.06) !important;
-    min-width: 220px !important;
-    max-width: 220px !important;
+}
+
+[data-testid="stSidebar"][aria-expanded="true"] {
+    min-width: 230px !important;
+    max-width: 230px !important;
 }
 
 [data-testid="stSidebar"] > div:first-child {
